@@ -1,0 +1,29 @@
+# Bazel build outputs and symlinks
+# Bazel creates top-level symlinks like bazel-<workspace> and output dirs
+bazel-*
+/bazel-bin/
+/bazel-out/
+/bazel-testlogs/
+
+# Local Bazel config/state (keep shared config like .bazelversion committed)
+.bazelrc.user
+.bazelrc.local
+.bazel_history
+
+# Logs and coverage
+*.log
+coverage.dat
+lcov.info
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+*~
+*.swp
+*.swo
+.tags
+
+

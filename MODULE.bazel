@@ -1,0 +1,24 @@
+module(
+    name = "rules_rego_wasm",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "platforms", version = "0.0.11")
+
+# For non-bzlmod fallback examples (optional)
+# http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+# Make the OPA tool available to this repo's own tests
+opa = use_extension("//:extensions.bzl", "opa")
+opa.tool(version = "v1.7.1")
+use_repo(
+    opa,
+    "rules_rego_wasm_opa_linux_amd64",
+    "rules_rego_wasm_opa_macos_arm64",
+    "rules_rego_wasm_toolchains",
+)
+
+register_toolchains("@rules_rego_wasm_toolchains//:all")

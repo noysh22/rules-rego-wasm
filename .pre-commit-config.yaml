@@ -1,0 +1,14 @@
+repos:
+  - repo: local
+    hooks:
+      - id: buildifier-format
+        name: buildifier format Starlark (BUILD/WORKSPACE/.bzl/.bazel)
+        entry: buildifier -mode=fix -lint=fix
+        language: system
+        files: '(^|/)(BUILD|WORKSPACE)(\.bazel)?$|\.bzl$|\.bazel$'
+      - id: buildifier-lint
+        name: buildifier lint Starlark (fails on issues)
+        entry: buildifier -mode=check -lint=warn
+        language: system
+        files: '(^|/)(BUILD|WORKSPACE)(\.bazel)?$|\.bzl$|\.bazel$'
+

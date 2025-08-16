@@ -1,0 +1,4 @@
+package(default_visibility = ["//visibility:public"])
+
+# Toolchain type for OPA binary
+toolchain_type(name = "opa_toolchain_type")

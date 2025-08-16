@@ -1,0 +1,22 @@
+load("@rules_rego_wasm//rego:defs.bzl", "rego_to_wasm")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+package(default_visibility = ["//visibility:public"])
+
+rego_to_wasm(
+    name = "example_policy",
+    src = "example.rego",
+)
+
+# Expose outputs for testing
+filegroup(
+    name = "example_outputs",
+    srcs = [":example_policy"],
+)
+
+sh_test(
+    name = "check_outputs_test",
+    srcs = ["check_outputs_test.sh"],
+    args = ["$(locations :example_policy)"],
+    data = [":example_policy"],
+)

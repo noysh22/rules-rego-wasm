@@ -1,0 +1,15 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+bzl_library(
+    name = "rego_defs_lib",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "rego_to_wasm_script",
+    srcs = ["rego-to-wasm.sh"],
+)
