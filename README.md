@@ -1,17 +1,10 @@
 # rules-rego-wasm
 
-Reusable Bazel rule to compile Rego policies to WebAssembly (WASM), packaged as a Bazel Module (bzlmod-only).
-
-Features:
-- rego_to_wasm rule: builds both the .wasm and the OPA bundle (.tar.gz)
-- Toolchain-based OPA binary selection (macOS ARM64 and Linux AMD64 supported)
-- Bazel Module extension to fetch OPA binaries
-- Example policy and test
-- GitHub Actions CI
+Bazel rule to compile Rego policies to WebAssembly (WASM).
 
 Usage (consumer repo, MODULE.bazel):
-
-module(name = "your_repo")
+```python
+module(name = "your_module")
 
 bazel_dep(name = "rules_rego_wasm", version = "0.1.0")
 
@@ -25,9 +18,11 @@ use_repo(opa,
 
 # Register the toolchains created by the extension
 register_toolchains("@rules_rego_wasm_toolchains//:all")
+```
 
 Then, in your BUILD file:
 
+```python
 load("@rules_rego_wasm//rego:defs.bzl", "rego_to_wasm")
 
 rego_to_wasm(
@@ -38,6 +33,6 @@ rego_to_wasm(
 # This provides these outputs at analysis time:
 # - example_policy.wasm
 # - example_policy_bundle.tar.gz
+```
 
-OPA versions: set with opa.tool(version = "vX.Y.Z"). Supported platforms: macOS arm64, Linux amd64.
-
+**OPA versions: set with opa.tool(version = "vX.Y.Z"). Supported platforms: macOS arm64, Linux amd64.**
