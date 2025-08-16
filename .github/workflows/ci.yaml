@@ -25,7 +25,7 @@ jobs:
         uses: bazelbuild/setup-bazelisk@v3
 
       - name: Build examples
-        run: bazel build //examples/... --enable_bzlmod
+        run: bazel build //examples/...
 
       - name: Test examples
-        run: bazel test //... --enable_bzlmod
+        run: bazel test //...
