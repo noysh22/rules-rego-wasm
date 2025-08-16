@@ -10,20 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        name: Checkout
+
       - name: Cache Bazel
         uses: actions/cache@v4
         with:
           path: |
             ~/.cache/bazel
-            ~/.cache/bazelisk
-          key: ${{ runner.os }}-bazel-${{ hashFiles('**/MODULE.bazel', '**/*.bzl', '**/BUILD*') }}
+          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'MODULE.bazel', 'MODULE.bazel.lock') }}
           restore-keys: |
             ${{ runner.os }}-bazel-
-      - name: Install Bazelisk
-        run: |
-          curl -L https://github.com/bazelbuild/bazelisk/releases/download/v1.21.0/bazelisk-linux-amd64 -o /usr/local/bin/bazel
-          chmod +x /usr/local/bin/bazel
+
+      - name: Setup Bazel
+        uses: bazelbuild/setup-bazelisk@v3
+
       - name: Build examples
         run: bazel build //examples/... --enable_bzlmod
+
       - name: Test examples
         run: bazel test //... --enable_bzlmod
