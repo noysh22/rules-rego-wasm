@@ -17,7 +17,11 @@ use_repo(opa,
 )
 
 # Register the toolchains created by the extension
-register_toolchains("@rules_rego_wasm_toolchains//:all")
+register_toolchains(
+    "@rules_rego_wasm_toolchains//:linux_amd64_toolchain",
+    "@rules_rego_wasm_toolchains//:macos_arm64_toolchain",
+)
+
 ```
 
 Then, in your BUILD file:
