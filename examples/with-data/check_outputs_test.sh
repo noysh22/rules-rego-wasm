@@ -74,10 +74,30 @@ if [ ! -f "$bundle_data_json" ]; then
   exit 1
 fi
 
-# Compare content
-if ! diff -u "$input_data_json" "$bundle_data_json"; then
-  echo "data.json inside bundle does not match source examples/with-data/data.json" >&2
-  exit 1
+# Compare JSON structurally using jq (ignores whitespace and key order)
+if command -v jq >/dev/null 2>&1; then
+  if jq -e -n --slurpfile a "$input_data_json" --slurpfile b "$bundle_data_json" '$a == $b' > /dev/null; then
+    echo "data.json inside bundle matches source (jq structural compare)"
+  else
+    echo "data.json inside bundle does not match source (jq structural compare)" >&2
+    # Optional: show a readable diff of normalized JSON for debugging
+    diff -u <(jq -S . "$input_data_json") <(jq -S . "$bundle_data_json") || true
+    exit 1
+  fi
+else
+  echo "jq is not available; falling back to textual normalized comparison" >&2
+  normalize_json() {
+    python3 - <<'PY'
+import json,sys
+with open(sys.argv[1]) as f:
+    obj=json.load(f)
+print(json.dumps(obj, sort_keys=True, separators=(",", ":")))
+PY
+  }
+  if ! diff -u <(normalize_json "$input_data_json") <(normalize_json "$bundle_data_json"); then
+    echo "data.json inside bundle does not match source examples/with-data/data.json (after normalization)" >&2
+    exit 1
+  fi
 fi
 
 echo "Both wasm and bundle outputs exist and are non-empty."
