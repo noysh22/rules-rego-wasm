@@ -34,6 +34,16 @@ rego_to_wasm(
     src = "example.rego",
 )
 
+# Or use srcs to include data files (JSON/YAML) and multiple policy modules:
+rego_to_wasm(
+    name = "data_policy",
+    srcs = [
+        "data.json",
+        "example.rego",
+    ],
+    entrypoint = "rego/allow",
+)
+
 # This provides these outputs at analysis time:
 # - example_policy.wasm
 # - example_policy_bundle.tar.gz
