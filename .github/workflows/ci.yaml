@@ -2,8 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - '**'
   pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         name: Checkout
+
+      - name: Install jq
+        uses: dcarbone/install-jq-action@v3.2.0
 
       - name: Cache Bazel
         uses: actions/cache@v4
