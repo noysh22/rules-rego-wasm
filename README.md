@@ -6,7 +6,7 @@ Usage (consumer repo, MODULE.bazel):
 ```python
 module(name = "your_module")
 
-bazel_dep(name = "rules_rego_wasm", version = "0.1.0")
+bazel_dep(name = "rules_rego_wasm", version = "0.2.0")
 
 opa = use_extension("@rules_rego_wasm//:extensions.bzl", "opa")
 opa.tool(version = "v1.7.1")
