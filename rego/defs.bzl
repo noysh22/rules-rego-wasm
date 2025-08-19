@@ -50,7 +50,7 @@ rego_to_wasm = rule(
         # New multi-source attribute supporting .rego (modules) and .json/.yaml/.yml (data)
         "srcs": attr.label_list(allow_files = [".rego", ".json", ".yaml", ".yml"]),
         # Configurable entrypoint (default: policy/allow)
-        "entrypoint": attr.string(default = "policy/allow"),
+        "entrypoint": attr.string(default = "rego/allow"),
         "_compile_script": attr.label(
             default = Label("//rego:rego_to_wasm_script"),
             executable = True,

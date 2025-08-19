@@ -142,7 +142,7 @@
     "//:extensions.bzl%opa": {
       "general": {
         "bzlTransitiveDigest": "OUtIizMCBIphBlgngk/j0njxGAPJpAXrPj/TG2w/oSo=",
-        "usagesDigest": "6rt5F1xzIVt0TgGsxHIylf3f9rFxrxMyqJUTKR+iCiE=",
+        "usagesDigest": "eDa/AvqjgK+j9bJTqtJoxozsiXkYE9FbGoRociUFSzk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
